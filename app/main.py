@@ -1,11 +1,15 @@
-from core.start import DBot
 import discord
-import os
+import dotenv
 
-from dotenv import load_dotenv
-load_dotenv()
+from server import server_thread
 
-Token = os.environ['TOKEN']
+dotenv.load_dotenv()
+
+TOKEN = os.environ.get("TOKEN")
+intents = discord.Intents.default()
+intents.message_content = True
+intents.voice_states = True
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_message(message):
@@ -15,9 +19,6 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
 
-
-# Bot立ち上げ
-DBot(
-    token=Token,
-    intents=discord.Intents.all()
-).run()
+# Koyeb用 サーバー立ち上げ
+server_thread()
+client.run(TOKEN)
