@@ -1,0 +1,16 @@
+import os
+import discord
+from typing import TYPE_CHECKING
+
+import aiohttp
+
+
+from discord import app_commands
+
+tree = app_commands.CommandTree(client)
+
+        
+@tree.command(name='hello', description='Say hello to the world!') 
+async def test(interaction: discord.Interaction): 
+  await interaction.response.send_message('Hello, World!',ephemeral=True)
+    #ephemeral=True→「これらはあなただけに表示されています」
